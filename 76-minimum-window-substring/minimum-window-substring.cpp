@@ -30,9 +30,7 @@ public:
         for (const auto& c: t) t_map[c]++;
 
         int have = 0, need = t_map.size();
-        pair<int, int> res = {-1, -1};
-        int resLen = INT_MAX;
-        int r_beg = INT_MAX;
+        pair<int, int> res = {INT_MAX, INT_MAX};
         int l = 0;
         for (int r = 0; r < m; r++){
             char c = s[r];
@@ -41,10 +39,9 @@ public:
                 have++; // we have found the same freq of chars in s
             }
             while (have == need){
-                if ((r - l + 1) < resLen){
-                    resLen = r - l + 1;
-                    // res = {l, r};
-                    r_beg = l;
+                if ((r - l + 1) < res.second){
+                    res.second = r - l + 1;
+                    res.first = l;
                 }
 
                 matches_map[s[l]]--;
@@ -53,6 +50,6 @@ public:
             }
         }
         
-        return resLen == INT_MAX ? "" : s.substr(r_beg, resLen);
+        return res.second == INT_MAX ? "" : s.substr(res.first, res.second);
     }
 };
